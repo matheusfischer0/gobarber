@@ -14,33 +14,33 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
-
-    "prettier/prettier":"error",
-    "class-methods-use-this":"off",
-    "@typescript-eslint/no-unused-vars":["error",{
-      "argsIgnorePattern":"_"
-    }],
-    "no-unused-vars": ["error",
+    "prettier/prettier": "error",
+    "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "@typescript-eslint/interface-name-prefix": [
+      "error",
+      { "prefixWithI": "always" }
+    ],
+    "no-unused-vars": [
+      "error",
       {
         "argsIgnorePattern": "_"
       }
     ],
     "camelcase": "off",
-    "import/extensions":[
+    "import/extensions": [
       "error",
-      "ignorePackages",{
-        "ts":"never"
+      "ignorePackages",
+      {
+        "ts": "never"
       }
-  ]
+    ]
   },
   "settings": {
-    "import/resolver":{
-      "typescript":{}
+    "import/resolver": {
+      "typescript": {}
     }
   }
 }
