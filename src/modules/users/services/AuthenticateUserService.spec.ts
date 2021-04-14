@@ -21,7 +21,7 @@ describe('Authenticate User', () => {
       fakeHashProvider,
     );
 
-    await createUser.execute({
+    const user = await createUser.execute({
       name: 'john due',
       email: 'johndue@email.com',
       password: '1234',
@@ -33,9 +33,10 @@ describe('Authenticate User', () => {
     });
 
     expect(response).toHaveProperty('token');
+    expect(response.user).toEqual(user);
   });
 
-  it('should not be able to authenticate without a valid account', async () => {
+  it('should not be able to authenticate with non existing user', async () => {
     const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
 
@@ -43,11 +44,11 @@ describe('Authenticate User', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
-    expect(
+    await expect(
       authenticateUser.execute({
-        email: 'johndue@email.com',
+        email: 'johndue2@email.com',
         password: '1234',
-      })
+      }),
     ).rejects.toBeInstanceOf(AppError);
   });
 
@@ -64,17 +65,17 @@ describe('Authenticate User', () => {
       fakeHashProvider,
     );
 
-    await createUser.execute({
+    const user = await createUser.execute({
       name: 'john due',
       email: 'johndue@email.com',
-      password: '1234',
+      password: '1234'
     });
 
-    expect(
+    await expect(
       authenticateUser.execute({
         email: 'johndue@email.com',
-        password: '95123',
-      })
+        password: 'wrong_password',
+      }),
     ).rejects.toBeInstanceOf(AppError);
   });
 });
